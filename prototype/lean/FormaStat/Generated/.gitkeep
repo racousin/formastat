@@ -1,0 +1,3 @@
+# Verified, autoformalized theorems land here (one module per problem id).
+# The loop writes FormaStat/Generated/<id>.lean and appends the matching
+# `import FormaStat.Generated.<id>` to FormaStat.lean.

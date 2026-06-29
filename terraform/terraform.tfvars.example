@@ -1,0 +1,24 @@
+# Copy to terraform.tfvars and edit as needed (terraform.tfvars is gitignored).
+
+# gcp_project_id = "formastat"
+# gcp_region     = "europe-west1"
+# gcp_zone       = "europe-west1-b"
+
+# Auth: leave empty to use Application Default Credentials (recommended).
+# Set to a key path only if you created a Terraform SA key, e.g.:
+# credentials_file = "/Users/raphaelcousin/formastat-terraform-key.json"
+
+# bucket_name must be globally unique across all of GCS — change if taken.
+# bucket_name = "formastat-app-bucket-eu"
+
+# Cloud Run
+# container_image       = "europe-west1-docker.pkg.dev/formastat/formastat-docker/app:latest"
+# container_port        = 8080
+
+# allUsers (anonymous public) is blocked by the org's Domain Restricted Sharing
+# policy — keep this false unless an org-admin grants an allUsers exception.
+# allow_unauthenticated = false
+
+# Grant authenticated invoke access to in-domain principals instead:
+# invoker_members = ["domain:scai-sorbonne.fr"]
+# invoker_members = ["user:someone@scai-sorbonne.fr"]

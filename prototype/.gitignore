@@ -1,0 +1,19 @@
+# Lean build artifacts + caches
+lean/.lake/
+lean/lake-packages/
+*.olean
+
+# LeanCopilot model weights cache
+.cache/
+
+# Loop outputs
+metrics/results.sqlite
+metrics/report.md
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Secrets
+.env

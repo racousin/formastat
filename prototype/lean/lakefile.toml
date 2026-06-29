@@ -1,0 +1,28 @@
+# FormaStat — target Lean 4 project (the growing autoformalized corpus).
+#
+# Pinned: lean-toolchain leanprover/lean4:v4.32.0-rc1 ; mathlib v4.32.0-rc1.
+# `require mathlib` is the only dep, so `lake exe cache get` hits Mathlib's
+# prebuilt oleans (no from-source build).
+#
+# LeanCopilot is intentionally NOT included. LeanCopilot v4.31.0 forces `:shared`
+# (precompiled) builds of its Models.Registry, which hit a Lake build cycle
+# (batteries:shared ↔ BatteriesRecycling:shared ↔ LeanCopilot.Models.Registry)
+# against the batteries commit Mathlib v4.32.0-rc1 pins (954dbc9, which still
+# contains the BatteriesRecycling circular import — pre-batteries#1868).
+# Overriding batteries to a fixed commit would force a from-source Mathlib
+# rebuild (cache miss). Per the plan's Milestone-1 fallback, gap-filling uses
+# symbolic tactics (aesop/nlinarith/simp_all/…) instead of LeanCopilot's
+# `search_proof`. Re-add LeanCopilot once a tag builds against cache-backed Mathlib.
+#
+# Build: lake update && lake exe cache get && lake build
+
+name = "formastat"
+defaultTargets = ["FormaStat"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.32.0-rc1"
+
+[[lean_lib]]
+name = "FormaStat"

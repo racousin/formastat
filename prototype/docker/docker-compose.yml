@@ -1,0 +1,35 @@
+# FormaStat prototype — local run.
+#   cd prototype && docker compose -f docker/docker-compose.yml build
+#   GEMINI_API_KEY=... docker compose -f docker/docker-compose.yml run --rm app \
+#       python loop/run_loop.py --tiers 0,1
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        - BUILDPLATFORM=linux/amd64
+    image: formastat-proto
+    environment:
+      # AI-Studio key to start; switch to a Vertex OpenAI-compatible gateway for
+      # grant-billed cost measurement (see README / ULAM_GEMINI_BASE_URL).
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - ULAM_GEMINI_MODEL=${ULAM_GEMINI_MODEL:-gemini-3.1-pro-preview}
+      - ULAM_GEMINI_BASE_URL=${ULAM_GEMINI_BASE_URL:-}
+    volumes:
+      # Persist the verified corpus + metrics + generated Lean across runs.
+      - ../metrics:/app/metrics
+      - ../lean/FormaStat/Generated:/app/lean/FormaStat/Generated
+    working_dir: /app
+
+  # Optional: LiteLLM proxy to route UlamAI/loop at Vertex AI Gemini on the
+  # `formastat` project (grant-billed). Uncomment + provide ADC/SA creds, then
+  # set ULAM_GEMINI_BASE_URL=http://litellm:4000/v1.
+  # litellm:
+  #   image: ghcr.io/berriai/litellm:main-latest
+  #   command: ["--config", "/app/litellm.yaml", "--port", "4000"]
+  #   volumes:
+  #     - ../litellm/config.yaml:/app/litellm.yaml
+  #     - ${HOME}/.config/gcloud:/root/.config/gcloud:ro
+  #   ports: ["4000:4000"]

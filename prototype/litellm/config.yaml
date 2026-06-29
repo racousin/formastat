@@ -1,0 +1,22 @@
+# LiteLLM proxy → Vertex AI Gemini on the `formastat` project (grant-billed).
+# Exposes an OpenAI-compatible endpoint that UlamAI / the loop point `base_url` at:
+#   ULAM_GEMINI_BASE_URL=http://litellm:4000/v1
+#
+# Auth: mount ADC (gcloud application-default) into the proxy container; the
+# Vertex models route through project `formastat`. Confirm exact Gemini 3 model
+# ids + region availability on Vertex before relying on these names.
+
+model_list:
+  - model_name: gemini-3.1-pro-preview      # name the loop requests
+    litellm_params:
+      model: vertex_ai/gemini-3-pro
+      vertex_project: formastat
+      vertex_location: europe-west1
+  - model_name: gemini-3-flash              # back-translation judge
+    litellm_params:
+      model: vertex_ai/gemini-3-flash
+      vertex_project: formastat
+      vertex_location: europe-west1
+
+litellm_settings:
+  drop_params: true

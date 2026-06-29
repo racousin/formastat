@@ -1,0 +1,5 @@
+# FormaStat loop — Python deps (Python 3.11+)
+openai>=1.40        # OpenAI-compatible client → Gemini base_url (AI-Studio / Vertex gateway)
+PyYAML>=6.0         # curriculum loader
+# Optional: long-lived Lean REPL instead of `lake env lean` per snippet
+# lean-interact>=0.4
